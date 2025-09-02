@@ -31,13 +31,13 @@
   <div id="unity-warning"></div>
 
   <!-- Load Unity loader -->
-  <script src="Build/mygame.loader.js"></script>
+  <script src="./Build/mygame.loader.js"></script>
   <script>
     // ===== EDIT THESE =====
     const RELEASE_BASE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0"; // Your release base URL
     const DATA_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data";   // Name of your .data file
     const WASM_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm";   // Name of your .wasm file if hosted on Release
-    const FRAMEWORK_FILE = "Build/mygame.framework.js"; // Usually kept local
+    const FRAMEWORK_FILE = "./Build/mygame.framework.js"; // Usually kept local
 
     const canvas = document.getElementById("unity-canvas");
     const loadingBar = document.getElementById("unity-loading-bar");
