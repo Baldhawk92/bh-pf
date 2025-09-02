@@ -51,12 +51,12 @@
         updateBannerVisibility();
       }
 
-      
-      var loaderUrl = "/mygame.loader.js";
+      var buildUrl = "docs/Build";
+      var loaderUrl = buildUrl + "/mygame.loader.js";
       var config = {
         arguments: [],
         dataUrl: "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data",
-        frameworkUrl: "/mygame.framework.js",
+        frameworkUrl: buildUrl + "/mygame.framework.js",
         codeUrl: "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
