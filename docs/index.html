@@ -26,16 +26,16 @@
 
   <!-- 1) Load the loader from your Pages-hosted Build folder -->
   <!-- Replace with your actual loader filename -->
-  <script src="Build/MyGame.loader.js"></script>
+  <script src="Build/myGame.loader.js"></script>
 
   <script>
     // 2) Point big files to GitHub Releases (replace USERNAME/REPO/v1.0.0 and filenames)
-    const RELEASE_BASE = "https://github.com/USERNAME/REPO/releases/download/v1.0.0";
+    const RELEASE_BASE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0";
 
     // If your .wasm is < 25 MB and you kept it in docs/Build/, use "Build/MyGame.wasm" instead.
-    const DATA_URL = RELEASE_BASE + "/MyGame.data";
-    const WASM_URL = "Build/MyGame.wasm"; // or RELEASE_BASE + "/MyGame.wasm" if wasm >= 25 MB
-    const FRAMEWORK_URL = "Build/MyGame.framework.js"; // keep local unless it exceeds 25 MB
+    const DATA_URL = RELEASE_BASE + "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data";
+    const WASM_URL = "Build/myGame.wasm"; // or RELEASE_BASE + "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm" if wasm >= 25 MB
+    const FRAMEWORK_URL = "Build/myGame.framework.js"; // keep local unless it exceeds 25 MB
 
     createUnityInstance(document.getElementById("unity-canvas"), {
       dataUrl: DATA_URL,
