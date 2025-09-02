@@ -33,8 +33,8 @@
     const RELEASE_BASE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0";
 
     // If your .wasm is < 25 MB and you kept it in docs/Build/, use "Build/MyGame.wasm" instead.
-    const DATA_URL = RELEASE_BASE + "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data";
-    const WASM_URL = "Build/myGame.wasm"; // or RELEASE_BASE + "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm" if wasm >= 25 MB
+    const DATA_URL = RELEASE_BASE + "/mygame.data";
+    const WASM_URL = RELEASE_BASE + "/mygame.wasm";
     const FRAMEWORK_URL = "Build/myGame.framework.js"; // keep local unless it exceeds 25 MB
 
     createUnityInstance(document.getElementById("unity-canvas"), {
