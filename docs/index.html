@@ -38,9 +38,9 @@
     const FRAMEWORK_URL = "Build/myGame.framework.js"; // keep local unless it exceeds 25 MB
 
     createUnityInstance(document.getElementById("unity-canvas"), {
-      dataUrl: DATA_URL,
-      frameworkUrl: FRAMEWORK_URL,
-      codeUrl: WASM_URL,
+      dataUrl: "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data",
+      frameworkUrl: "Build/mygame.framework.js",
+      codeUrl: "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm",
       streamingAssetsUrl: "StreamingAssets", // change if you use one
       companyName: "MyCompany",
       productName: "MyGame",
