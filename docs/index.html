@@ -7,11 +7,13 @@
 
   <style>
     html, body { margin:0; padding:0; width:100%; height:100%; background:#000; overflow:hidden; }
-    #unity-canvas { width:100%; height:100%; display:block; }
+    #unity-canvas { display:block; width:100%; height:100%; }
     #unity-warning { color:white; font-family:Arial, sans-serif; text-align:center; margin-top:10vh; }
+    #unity-loading-bar { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:50%; height:20px; background:#555; }
+    #unity-progress-bar-full { width:0%; height:100%; background:#0f0; }
   </style>
 
-  <!-- Optional: block mobile devices -->
+  <!-- Block mobile devices -->
   <script>
     if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
       document.addEventListener("DOMContentLoaded", () => {
@@ -23,48 +25,57 @@
 </head>
 <body>
   <canvas id="unity-canvas"></canvas>
-  <div id="unity-loading-bar" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50%;height:20px;background:#555;">
-    <div id="unity-progress-bar-full" style="width:0%;height:100%;background:#0f0;"></div>
+  <div id="unity-loading-bar">
+    <div id="unity-progress-bar-full"></div>
   </div>
+  <div id="unity-warning"></div>
 
-  <!-- Loader script -->
+  <!-- Load Unity loader -->
   <script src="Build/mygame.loader.js"></script>
   <script>
-    // === EDIT THESE ===
-    const RELEASE_BASE = "https://github.com/Baldhawk92/bh-pf/releases/tag/v1.0.0"; // Replace
-    const DATA_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data"; // Your uploaded .data file name
-    const WASM_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm"; // Your .wasm file (use Release if >25MB)
-    const FRAMEWORK_FILE = "Build/mygame.framework.js"; // Usually <25MB, keep local
+    // ===== EDIT THESE =====
+    const RELEASE_BASE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0"; // Your release base URL
+    const DATA_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.data";   // Name of your .data file
+    const WASM_FILE = "https://github.com/Baldhawk92/bh-pf/releases/download/v1.0.0/mygame.wasm";   // Name of your .wasm file if hosted on Release
+    const FRAMEWORK_FILE = "Build/mygame.framework.js"; // Usually kept local
 
-    const config = {
+    const canvas = document.getElementById("unity-canvas");
+    const loadingBar = document.getElementById("unity-loading-bar");
+    const progressBar = document.getElementById("unity-progress-bar-full");
+    const warningDiv = document.getElementById("unity-warning");
+
+    function showBanner(msg, type) {
+      const div = document.createElement("div");
+      div.innerHTML = msg;
+      div.style.background = type==='error' ? 'red' : (type==='warning' ? 'yellow' : 'transparent');
+      div.style.padding = "10px";
+      warningDiv.appendChild(div);
+    }
+
+    createUnityInstance(canvas, {
       dataUrl: `${RELEASE_BASE}/${DATA_FILE}`,
       frameworkUrl: FRAMEWORK_FILE,
-      codeUrl: `${RELEASE_BASE}/${WASM_FILE}`, // or local Build/mygame.wasm if <25MB
+      codeUrl: `${RELEASE_BASE}/${WASM_FILE}`,
       streamingAssetsUrl: "StreamingAssets",
       companyName: "DefaultCompany",
       productName: "My Game",
       productVersion: "1.0",
-      showBanner: (msg, type) => {
-        const banner = document.getElementById("unity-warning");
-        const div = document.createElement("div");
-        div.innerHTML = msg;
-        div.style.background = type==='error' ? 'red' : (type==='warning'?'yellow':'transparent');
-        div.style.padding = '10px';
-        banner.appendChild(div);
+      showBanner: showBanner
+    }).then(unityInstance => {
+      loadingBar.style.display = "none";
+      // Resize canvas automatically when window resizes
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
-    };
-
-    const canvas = document.getElementById("unity-canvas");
-
-    createUnityInstance(canvas, config, (progress) => {
-      document.getElementById("unity-progress-bar-full").style.width = 100*progress + "%";
-    }).then((unityInstance) => {
-      document.getElementById("unity-loading-bar").style.display = "none";
-      document.body.onresize = () => unityInstance.ResizeCanvas();
-    }).catch((err) => {
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+      // Optional fullscreen button
+      document.body.addEventListener("dblclick", () => unityInstance.SetFullscreen(1));
+    }).catch(err => {
       alert(err);
       console.error(err);
-    });
+    }).then(null, err => console.error(err)); // Catch double promise rejection
   </script>
 </body>
 </html>
